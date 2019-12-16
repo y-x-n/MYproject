@@ -10,6 +10,12 @@ export default new Router({
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld
-    }
+    },
+    {
+      path: '/login',
+      name: '登录',
+      component: () => import('../view/login/index'),
+      hidden: true
+    },
   ]
 })

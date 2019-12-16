@@ -34,7 +34,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
     }
   },
@@ -48,8 +47,12 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+        loader: 'babel-loader?cacheDirectory',
+        include: [
+          resolve('src'),
+          resolve('test'),
+          resolve('node_modules/webpack-dev-server/client')
+        ]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -75,7 +78,17 @@ module.exports = {
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       }
-    ]
+    ],
+    loaders: [
+      {
+          test: /\.js$/,
+          exclude: /(node_modules|bower_components)/,
+          loader: 'babel',
+          query: {
+              presets: ['es2015']
+          }
+      },
+  ]
   },
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
